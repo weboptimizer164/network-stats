@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
+	<script>
+	$(document).ready(function(){
+		$('#callAPI2').click(function(){
+			$(".displayBw").html("<tr><td>Sno</td><td>Source</td><td>Destination</td><td>BandWidth</td></tr>");
+			$("#loader").show();
+			var filters = {"Time1":"14:21:05","Time2":"14:21:06"};
+			console.log(filters);
+			$.ajax({
+				url:'http://127.0.0.1:8000/scanner/display/bandwidth',
+				method:"POST",
+				contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+				dataType:'json',
+				// data :filters,
+				accept:'application/json',
+				crossOrigin: false,
+
+				success: function(resultData){
+					
+					console.log(resultData);
+					// var portFrequency = [];
+					// for(var i=0; i<resultData.length; i++){
+					// 	portFrequency[i]=resultData[i].RemotePort;
+					// }
+					// portFrequency=(_.countBy(portFrequency));
+						$('#callAPI2').trigger('click');
+					$.each(resultData, function(sno, dataval){
+						$(".displayBw").append("<tr><td>"+sno+"</td><td>"+dataval.Source+"</td><td>"+dataval.Destination+"</td></td>"+"</td><td>"+dataval.Speed+"</td></tr>");
+					});
+
+				},
+				error : function(jqXHR, textStatus, errorThrown) {
+					console.log(jqXHR.responseText);
+		        },
+
+		        timeout: 20000,
+			});
+		});
+	});
+	</script>
+	<script>
+	$(document).ready(function(){
+		$('#callAPI').click(function(){
+			$(".displayResult").html("<tr><td>Port Number</td><td>Local</td><td>Remote</td><td>Total</td></tr>");
+			$(".loader").show();
+			var filters = {"Time1":"14:21:05","Time2":"14:21:06"};
+			console.log(filters);
+			$.ajax({
+				url:'http://127.0.0.1:8000/scanner/results/temp',
+				method:"POST",
+				contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+				dataType:'json',
+				data :filters,
+				accept:'application/json',
+				crossOrigin: false,
+
+				success: function(resultData){
+					$(".loader").hide();
+					console.log(resultData);
+					// var portFrequency = [];
+					// for(var i=0; i<resultData.length; i++){
+					// 	portFrequency[i]=resultData[i].RemotePort;
+					// }
+					// portFrequency=(_.countBy(portFrequency));
+						$('#callAPI').trigger('click');
+					$.each(resultData, function(portNumber, frequency){
+						$(".displayResult").append("<tr><td>"+portNumber+"</td><td>"+frequency.Local+"</td><td>"+frequency.Remote+"</td><td>"+(parseInt(frequency.Local)+parseInt(frequency.Remote))+"</td></tr>");
+					});
+
+				},
+				error : function(jqXHR, textStatus, errorThrown) {
+					console.log(jqXHR.responseText);
+		        },
+
+		        timeout: 20000,
+			});
+		});
+	});
+	</script>
+	<script>
+	$(document).ready(function(){
+		$('#getSpeed').click(function(){
+			$(".dlspeed").html("<tr><td>Statistic</td><td>Value</td></tr>");
+			$.ajax({
+				url:'http://127.0.0.1:8000/scanner/display/frequency',
+				method:"POST",
+				contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+				dataType:'json',
+				// data :filters,
+				accept:'application/json',
+				crossOrigin: false,
+
+				success: function(resultData){
+					
+					console.log(resultData);
+					// var portFrequency = [];
+					// for(var i=0; i<resultData.length; i++){
+					// 	portFrequency[i]=resultData[i].RemotePort;
+					// }
+					// portFrequency=(_.countBy(portFrequency));
+						$('#getSpeed').trigger('click');
+					$.each(resultData, function(UL, DL){
+						$(".dlspeed").append("<tr><td>"+UL+"</td><td>"+DL+"</td></tr>");
+					});
+
+				},
+				error : function(jqXHR, textStatus, errorThrown) {
+					console.log(jqXHR.responseText);
+		        },
+
+		        timeout: 20000,
+			});
+		});
+	});
+	</script>
+	<script>
+	$(document).ready(function(){
+		$('#callAPI2').click(function(){
+			$(".displayBw").html("<tr><td>S. no.</td><td>Source</td><td>Destination</td><td>BandWidth</td></tr>");
+			$(".loader").show();
+			var filters = {"Time1":"14:21:05","Time2":"14:21:06"};
+			console.log(filters);
+			$.ajax({
+				url:'http://127.0.0.1:8000/scanner/display/bandwidth',
+				method:"POST",
+				contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+				dataType:'json',
+				// data :filters,
+				accept:'application/json',
+				crossOrigin: false,
+
+				success: function(resultData){
+					
+					console.log(resultData);
+					// var portFrequency = [];
+					// for(var i=0; i<resultData.length; i++){
+					// 	portFrequency[i]=resultData[i].RemotePort;
+					// }
+					// portFrequency=(_.countBy(portFrequency));
+						$('#callAPI2').trigger('click');
+					$.each(resultData, function(sno, dataval){
+						$(".displayBw").append("<tr><td>"+sno+"</td><td>"+dataval.Source+"</td><td>"+dataval.Destination+"</td></td>"+"</td><td>"+dataval.Speed+"</td></tr>");
+					});
+
+				},
+				error : function(jqXHR, textStatus, errorThrown) {
+					console.log(jqXHR.responseText);
+		        },
+
+		        timeout: 20000,
+			});
+		});
+	});
+	</script>
+
+	
+	
+	<style type="text/css">
+		table{
+			border: 1px solid black;
+			text-align: center;
+		}
+		td{
+			border: 1px solid black;
+		}
+		.loader{
+			display: none;
+			animation: blink 1s infinite;
+		}
+
+		@keyframes blink {
+			0% {opacity: 0}
+			49%{opacity: 0}
+			50% {opacity: 1}
+		}
+
+		#main
+{
+
+	width:1850px;
+	height:1500px;
+	margin:0px auto;
+	
+}
+#top
+{
+	margin-top:-10px;
+	background:white;
+	width:inherit;
+	height:50px;
+}
+
+#acc
+{
+	background-image:url("image/pcc.jpg");
+	background-repeat:no-repeat;
+	background-size:cover;
+	width:inherit;
+	height:380px;
+}
+#acc1
+{
+	width:1200px;
+	height: inherit;
+	float:left;
+}
+#acc2
+{
+	width:650px;
+	float: right;
+	height: inherit;
+}
+a
+{
+	font-weight: bolder;
+	font-family: arial;
+	font-size: 40px;
+	padding-left: 380px;
+	padding-top: 60px;
+	color: white;
+	text-decoration: none;
+}
+a:hover
+{
+color:#f5c34c;
+
+}
+#tab1
+{
+	width:inherit;
+	height:700px;
+	margin-top:0px;
+	background:#f5c34c;
+	margin-bottom: 20px;
+}
+#tab2
+{
+	width:inherit;
+	height:1000px;
+	margin-top:0px;
+	background:#f5c34c;
+}
+#speed
+{
+	width:inherit;
+	height:400px;
+	margin-top:0px;
+	background:#f5c34c;
+}
+.displayResult,td,th
+{
+	
+	border:3px solid black;
+	border-collapse:collapse;
+}
+.displayResult
+{
+	width:1000px;
+	background:orange;
+	margin:0 auto;
+}
+.displayResult tr:nth-child(2n) td
+{
+	background:white;
+}
+.displayResult tr:nth-child(2n-1) td
+{
+	background:grey;
+}
+
+.displayBw,td,th
+{
+	
+	border:3px solid black;
+	border-collapse:collapse;
+}
+.displayBw
+{
+	width:1000px;
+	background:orange;
+	margin:0 auto;
+}
+.displayBw tr:nth-child(2n) td
+{
+	background:white;
+}
+.displayBw tr:nth-child(2n-1) td
+{
+	background:grey;
+}
+
+.dlspeed,td,th
+{
+	
+	border:3px solid black;
+	border-collapse:collapse;
+}
+.dlspeed
+{
+	width:1000px;
+	background:orange;
+	margin:0 auto;
+}
+.dlspeed tr:nth-child(2n) td
+{
+	background:white;
+}
+.dlspeed tr:nth-child(2n-1) td
+{
+	background:grey;
+}
+th
+{
+	font-family: Sans MS;
+	font-size:35px;
+	height:50px;
+	background:#424242;
+	color:white;
+}
+td
+{
+	padding-left:40px;
+	font-size:23px;
+}
+tr
+{
+	padding-left:40px;
+	height:45px;
+}
+#heading
+{
+	width:1360px;
+	height:70px;
+	background:#f5c34c;
+	margin-bottom:0px;
+	padding-left:490px;
+}
+#heading3
+{
+	width:1410px;
+	height:70px;
+	background:#f5c34c;
+	margin-bottom:0px;
+	padding-left:440px;
+}
+#heading2
+{
+	width:1390px;
+	height:70px;
+	background:#f5c34c;
+	margin-bottom:0px;
+	padding-left:460px;
+}
+
+
+	</style>
+
+</head>
+
+
+<body>
+
+<div id="main">
+<div id="top">
+<div style="height:inherit;width:1240px;float:left;">
+<p style="font-family:Comic Sans MS;padding-left:1590px;font-size:20px;margin-top:13px;">SCANNING...</p></div>
+<div style="height:inherit;width:60px;float:right;">
+<img src="loader.gif" style="padding-top:15px;padding-left:10px;" /></div>
+</div>
+
+<div id="acc">
+<div id="acc1">
+<h2 style="color:white;font-family:arial;font-size:70px;margin-bottom:0px;margin-top:0px;padding-left:78px;padding-top:20px;">WEB APPLICATION FOR</h2>
+<h1 style="color:#f5c34c;font-family:arial;font-size:120px;margin:0px;padding:0px;padding-left:78px;">NETWORK </h1>
+<h1 style="color:#f5c34c;font-family:arial;font-size:120px;margin:0px;padding:0px;padding-left:78px;">STATISTICS</h1>
+</div>
+
+<div id="acc2">
+<a href="logs.html" target="_blank">VIEW LOGS</a>
+</div>
+</div>
+
+	
+	<marquee><img src="sma.jpg" style="height:150px;width:800px;"></marquee>
+
+	<div id="heading"><h3 style="font-family:Arial;font-size:40px;padding-top:8px;">Bandwidth Distribution among various Users</h3></div>
+
+	<div id="tab1">
+	<button id="callAPI2" style="width:200px;height:80px;font-size:35px;font-family:Arial;margin-left:50px;background:black;color:white;border-radius:10px solid black;">START</button>
+		<table class="displayBw">
+			<tr>
+				<td>S. No.</td>
+				<td>Source</td>
+				<td>Destination</td>
+				<td>BandWidth</td>
+			</tr>
+		</table>
+		<div class="loader" ><p style="font-family:Comic Sans MS;font-size:30px;margin-left:750px;color:black;">*Auto-refresh after 10 seconds</p></div>
+	</div>
+
+<div id="heading3"><h3 style="font-family:Arial;font-size:40px;padding-top:8px;">Download Speed and Upload Speed Data over time</h3></div>
+
+	<div id="speed">
+		<button id="getSpeed" style="width:200px;height:80px;font-size:35px;font-family:Arial;margin-left:50px;background:black;color:white;border-radius:10px solid black;">START</button>
+		<table class="dlspeed">
+			<tr>
+				<td>Statistic</td>
+				<td>Value</td>
+			</tr>
+		</table>
+	</div>
+
+<div id="heading2"><h3 style="font-family:Arial;font-size:40px;padding-top:8px;">Distribution of ports among local and remote users</h3></div>
+	
+	<div id="tab2">
+		<button id="callAPI" style="width:200px;height:80px;font-size:35px;font-family:Arial;margin-left:50px;background:black;color:white;border-radius:10px solid black;">START</button>
+		<table class="displayResult">
+			<tr>
+				<td>Port Number</td>
+				<td>Local</td>
+				<td>Remote</td>
+				<td>Total</td>
+			</tr>
+		</table>
+		<div class="loader" ><p style="font-family:Comic Sans MS;font-size:30px;margin-left:750px;color:black;">*Auto-refresh after 10 seconds</p></div>
+	</div>
+
+
+</div>
+</body>
+</html>

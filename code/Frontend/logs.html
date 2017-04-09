@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
+	<!-- <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script> -->
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
+
+<script type="text/javascript" language="javascript" class="init"></script>
+
+<script>
+	$(document).ready(function(){
+		
+			// $(".displayResult").html("<tr><td>Port Number</td><td>Local</td><td>Remote</td><td>Total</td></tr>");
+			$("#loader").show();
+			var filters = {"Time1":"14:21:05","Time2":"14:21:06"};
+			console.log(filters);
+			$.ajax({
+				url:'http://127.0.0.1:8000/scanner/results/logs',
+				method:"POST",
+				contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+				dataType:'json',
+				data :filters,
+				accept:'application/json',
+				crossOrigin: false,
+
+				success: function(resultData){
+					// $("#loader").hide();
+					console.log(resultData);
+					$('#data_table').DataTable({
+						data:resultData,
+						"columns" : [
+							{"data": "Protocol"},
+							{"data": "Date"},
+							{"data": "ListenAddress"},
+							{"data": "ListenPort"},
+							{"data": "RemoteAddress"},
+							{"data": "RemotePort"},
+							{"data": "Status"},
+							{"data": "Time"}
+						]
+
+					});
+					// var portFrequency = [];
+					// for(var i=0; i<resultData.length; i++){
+					// 	portFrequency[i]=resultData[i].RemotePort;
+					// }
+					// portFrequency=(_.countBy(portFrequency));
+					// 	$('#callAPI').trigger('click');
+					// $.each(resultData, function(portNumber, frequency){
+					// 	$(".displayResult").append("<tr><td>"+portNumber+"</td><td>"+frequency.Local+"</td><td>"+frequency.Remote+"</td><td>"+(parseInt(frequency.Local)+parseInt(frequency.Remote))+"</td></tr>");
+					// });
+
+				},
+				error : function(jqXHR, textStatus, errorThrown) {
+					console.log(jqXHR.responseText);
+		        },
+
+		        timeout: 20000,
+			});
+		});
+	
+	
+</script>
+
+<style>
+#h11
+{
+	margin-top: -50px;
+	width:1850px;
+	height:100px;
+	margin:0 auto;
+	margin-bottom:0 px;
+	background: #f5c34c;
+}
+#abcd
+{
+	margin:0 auto;
+	margin-top:0px;
+	width:1850px;
+	height:1000px;
+	background: #f5c34c;
+}
+
+	.aaaa,td,th
+{
+	
+	border:3px solid black;
+	border-collapse:collapse;
+}
+.aaaa
+{
+	width:1640px;
+	background:orange;
+	margin:0 auto;
+}
+.aaaa tr:nth-child(2n) td
+{
+	background:white;
+}
+.aaaa tr:nth-child(2n-1) td
+{
+	background:grey;
+}
+
+th
+{
+	font-family: Sans MS;
+	font-size:25px;
+	height:45px;
+	background:#424242;
+	color:white;
+}
+.cc{
+	margin: 0px 0px;
+}
+td
+{
+	padding-left:30px;
+	font-size:20px;
+}
+tr
+{
+	padding-left:30px;
+	height:45px;
+}
+
+</style>
+
+</head>
+
+<body>
+	<br /><br />
+	<div class="cc container">
+	<div id="h11"><h1 style="font-size: 80px;font-family:arial;margin-left: 650px;">LOG FILES</h1></div>
+	<div id="abcd">
+	<table id="data_table" class="aaaa">
+		<thead>
+			<tr>
+				<th>Protocols</th>
+				<th>Date</th>
+				<th>Listen Port</th>
+				<th>Remote Port</th>
+				<th>Remote Address</th>
+				<th>Remote Address</th>
+				<th>Status</th>
+				<th>Time</th>
+			</tr>
+		</thead>
+	</table>
+</div>
+
+	</div>
+	</body>
+	</head>
+	</html>
+
